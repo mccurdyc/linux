@@ -1,0 +1,66 @@
+name: sync-upstream
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream and fetch
+        run: |
+          git remote add upstream https://github.com/torvalds/linux.git
+          git fetch --depth=1 upstream master
+
+      - name: Read last sync ref
+        id: last
+        run: |
+          if [ ! -f .upstream-sync-ref ]; then
+            echo "::error::.upstream-sync-ref not found"
+            exit 1
+          fi
+          echo "sha=$(cat .upstream-sync-ref | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Apply upstream diff
+        run: |
+          LAST="${{ steps.last.outputs.sha }}"
+          UPSTREAM="$(git rev-parse upstream/master)"
+          echo "Diffing ${LAST}..${UPSTREAM}"
+
+          if ! git diff "$LAST" upstream/master | git apply --3way; then
+            echo "::error::Failed to apply upstream diff cleanly."
+            echo "::error::Manual sync required: resolve conflicts locally"
+            echo "::error::between $LAST and $UPSTREAM."
+            exit 1
+          fi
+
+          echo "UPSTREAM_SHA=${UPSTREAM}" >> "$GITHUB_ENV"
+
+      - name: Commit and push
+        run: |
+          git update-index -q --refresh
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          echo "$UPSTREAM_SHA" > .upstream-sync-ref
+          git add -A
+          git commit -m "sync upstream $(date -u +%Y-%m-%d)"
+          git push origin main
