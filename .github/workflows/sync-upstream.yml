@@ -43,6 +43,11 @@ jobs:
           UPSTREAM="$(git rev-parse upstream/master)"
           echo "Diffing ${LAST}..${UPSTREAM}"
 
+          if ! git cat-file -e "${LAST}^{commit}" 2>/dev/null; then
+            echo "Fetching missing upstream base commit ${LAST}"
+            git fetch --depth=1 upstream "${LAST}"
+          fi
+
           if ! git diff "$LAST" upstream/master | git apply --3way; then
             echo "::error::Failed to apply upstream diff cleanly."
             echo "::error::Manual sync required: resolve conflicts locally"
