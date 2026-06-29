@@ -48,7 +48,7 @@ jobs:
             git fetch --depth=1 upstream "${LAST}"
           fi
 
-          if ! git diff "$LAST" upstream/master | git apply --3way; then
+          if ! git diff --binary "$LAST" upstream/master | git apply --3way; then
             echo "::error::Failed to apply upstream diff cleanly."
             echo "::error::Manual sync required: resolve conflicts locally"
             echo "::error::between $LAST and $UPSTREAM."
