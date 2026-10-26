@@ -10031,6 +10031,7 @@ R:	Yuezhang Mo <yuezhang.mo@sony.com>
 L:	exfat@lists.linux.dev
 S:	Maintained
 T:	git git://git.kernel.org/pub/scm/linux/kernel/git/linkinjeon/exfat.git
+F:	Documentation/filesystems/exfat.rst
 F:	fs/exfat/
 
 EXPRESSWIRE PROTOCOL LIBRARY
@@ -12085,7 +12086,7 @@ HISILICON SAS Controller
 M:	Xingui Yang <yangxingui@huawei.com>
 S:	Supported
 W:	http://www.hisilicon.com
-F:	Documentation/devicetree/bindings/scsi/hisilicon-sas.txt
+F:	Documentation/devicetree/bindings/scsi/hisilicon,hip05-sas-v1.yaml
 F:	drivers/scsi/hisi_sas/
 
 HISILICON SECURITY ENGINE V2 DRIVER (SEC2)
@@ -14433,7 +14434,8 @@ L:	linux-nfs@vger.kernel.org
 S:	Supported
 P:	Documentation/filesystems/nfs/nfsd-maintainer-entry-profile.rst
 B:	https://bugzilla.kernel.org
-T:	git git://git.kernel.org/pub/scm/linux/kernel/git/cel/linux.git
+T:	git git://git.kernel.org/pub/scm/linux/kernel/git/cel/linux.git nfsd-testing
+T:	git git://git.kernel.org/pub/scm/linux/kernel/git/cel/linux.git nfsd-next
 F:	Documentation/filesystems/nfs/
 F:	fs/lockd/
 F:	fs/nfs_common/
@@ -14450,6 +14452,7 @@ F:	include/uapi/linux/nfsd/
 F:	include/uapi/linux/sunrpc/
 F:	net/sunrpc/
 F:	tools/net/sunrpc/
+F:	tools/testing/selftests/nfsd/
 
 KERNEL NFSD BLOCK and SCSI LAYOUT DRIVER
 R:	Christoph Hellwig <hch@lst.de>
@@ -19824,6 +19827,7 @@ S:	Maintained
 T:	git git://git.kernel.org/pub/scm/linux/kernel/git/linkinjeon/ntfs.git
 F:	Documentation/filesystems/ntfs.rst
 F:	fs/ntfs/
+F:	include/uapi/linux/ntfs.h
 
 NTFS3 FILESYSTEM
 M:	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
@@ -20834,6 +20838,8 @@ F:	Documentation/devicetree/
 F:	Documentation/process/maintainer-devicetree.rst
 F:	arch/*/boot/dts/
 F:	include/dt-bindings/
+F:	scripts/dtc/dt-check-style
+F:	scripts/dtc/dt-style-selftest/
 
 OPENCOMPUTE PTP CLOCK DRIVER
 M:	Vadim Fedorenko <vadim.fedorenko@linux.dev>
@@ -21917,6 +21923,15 @@ F:	drivers/pinctrl/mediatek/pinctrl-rt2880.c
 F:	drivers/pinctrl/mediatek/pinctrl-rt305x.c
 F:	drivers/pinctrl/mediatek/pinctrl-rt3883.c
 
+PIN CONTROLLER - MEDIATEK MT6735
+M:	Yassine Oudjana <y.oudjana@protonmail.com>
+L:	linux-mediatek@lists.infradead.org (moderated for non-subscribers)
+S:	Maintained
+F:	Documentation/devicetree/bindings/pinctrl/mediatek,mt6779-pinctrl.yaml
+F:	drivers/pinctrl/mediatek/pinctrl-mt6735.c
+F:	drivers/pinctrl/mediatek/pinctrl-mtk-mt6735.h
+F:	include/dt-bindings/pinctrl/mediatek,mt6735-pinfunc.h
+
 PIN CONTROLLER - MICROCHIP AT91
 M:	Ludovic Desroches <ludovic.desroches@microchip.com>
 L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
@@ -22988,6 +23003,7 @@ QUALCOMM PINCTRL DRIVERS
 M:	Bartosz Golaszewski <brgl@kernel.org>
 L:	linux-arm-msm@vger.kernel.org
 S:	Supported
+T:	git git://git.kernel.org/pub/scm/linux/kernel/git/brgl/linux.git
 F:	Documentation/devicetree/bindings/pinctrl/qcom,*.yaml
 F:	drivers/pinctrl/qcom/
 
@@ -26679,6 +26695,14 @@ M:	Changhuang Liang <changhuang.liang@starfivetech.com>
 S:	Supported
 F:	Documentation/devicetree/bindings/interrupt-controller/starfive,jhb100-intc.yaml
 F:	drivers/irqchip/irq-starfive-jhb100-intc.c
+
+STARFIVE JHB100 PINCTRL DRIVERS
+M:	Changhuang Liang <changhuang.liang@starfivetech.com>
+M:	Lianfeng Ouyang <lianfeng.ouyang@starfivetech.com>
+L:	linux-gpio@vger.kernel.org
+S:	Maintained
+F:	Documentation/devicetree/bindings/pinctrl/starfive,jhb1*.yaml
+F:	drivers/pinctrl/starfive/pinctrl-starfive-jhb1*
 
 STATIC BRANCH/CALL
 M:	Peter Zijlstra <peterz@infradead.org>
